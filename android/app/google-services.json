@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "576897641702",
+    "project_id": "rangeofficerhelper",
+    "storage_bucket": "rangeofficerhelper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576897641702:android:d98e6f3771a2a99bdddf27",
+        "android_client_info": {
+          "package_name": "com.rangeofficer.rohelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576897641702-p2r7j06813mg670diiicgqm3ais7cpqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbUB7qBAycaWdauYMpWmiu6nLMcP-vcHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576897641702-p2r7j06813mg670diiicgqm3ais7cpqk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

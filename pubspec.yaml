@@ -39,6 +39,7 @@ dependencies:
   google_mlkit_entity_extraction: ^0.6.0
   camera: ^0.10.3+2
   image: ^4.0.15
+  cloud_firestore: ^4.5.1
 
 dev_dependencies:
   flutter_test:
