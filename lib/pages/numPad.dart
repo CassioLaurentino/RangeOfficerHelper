@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NumPad extends StatelessWidget {
+  final int maxHits;
   final double buttonWidth;
   final double buttonHeight;
   final Color buttonColor;
@@ -16,6 +17,7 @@ class NumPad extends StatelessWidget {
     this.buttonHeight = 55,
     this.buttonColor = const Color(0xFF5A5858),
     this.iconColor = Colors.amber,
+    required this.maxHits,
     required this.clearAll,
     required this.delete,
     required this.onSubmit,
@@ -40,6 +42,7 @@ class NumPad extends StatelessWidget {
                         spacing: 10,
                         children: [
                           NumberButton(
+                            maxHits: maxHits,
                             number: 7,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -48,6 +51,7 @@ class NumPad extends StatelessWidget {
                           ),
                           const SizedBox(width: 20),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 8,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -56,6 +60,7 @@ class NumPad extends StatelessWidget {
                           ),
                           const SizedBox(width: 20),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 9,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -63,6 +68,7 @@ class NumPad extends StatelessWidget {
                             controller: controller,
                           ),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 4,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -71,6 +77,7 @@ class NumPad extends StatelessWidget {
                           ),
                           const SizedBox(width: 20),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 5,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -79,6 +86,7 @@ class NumPad extends StatelessWidget {
                           ),
                           const SizedBox(width: 20),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 6,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -86,6 +94,7 @@ class NumPad extends StatelessWidget {
                             controller: controller,
                           ),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 1,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -94,6 +103,7 @@ class NumPad extends StatelessWidget {
                           ),
                           const SizedBox(width: 20),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 2,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -102,6 +112,7 @@ class NumPad extends StatelessWidget {
                           ),
                           const SizedBox(width: 20),
                           NumberButton(
+                            maxHits: maxHits,
                             number: 3,
                             width: buttonWidth,
                             height: buttonHeight,
@@ -126,6 +137,7 @@ class NumPad extends StatelessWidget {
                       runSpacing: 20,
                       children: [
                         NumberButton(
+                          maxHits: maxHits,
                           number: 10,
                           width: 80,
                           height: 80,
@@ -143,7 +155,7 @@ class NumPad extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              if (controller.value.length >= 20) {
+                              if (controller.value.length >= maxHits) {
                                 return;
                               }
                               controller.value.add(10.toString());
@@ -190,6 +202,7 @@ class NumPad extends StatelessWidget {
                 ),
               ),
               NumberButton(
+                maxHits: maxHits,
                 number: 0,
                 width: 100,
                 height: buttonHeight,
@@ -214,6 +227,7 @@ class NumPad extends StatelessWidget {
 }
 
 class NumberButton extends StatelessWidget {
+  final int maxHits;
   final int number;
   final double width;
   final double height;
@@ -222,6 +236,7 @@ class NumberButton extends StatelessWidget {
 
   const NumberButton({
     Key? key,
+    required this.maxHits,
     required this.number,
     required this.width,
     required this.height,
@@ -251,7 +266,7 @@ class NumberButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          if (controller.value.length >= 20) {
+          if (controller.value.length >= maxHits) {
             return;
           }
           controller.value.add(number.toString());

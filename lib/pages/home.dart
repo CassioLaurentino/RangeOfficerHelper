@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rohelper/pages/modalities/duel.dart';
 import 'package:rohelper/pages/modalities/fastDraw.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:rohelper/pages/timer_page.dart';
+// import 'package:rohelper/firebase_options.dart';
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(HomePage());
+  });
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -45,45 +59,23 @@ class HomePage extends StatelessWidget {
                 ));
               },
               child: LayoutBuilder(builder: (context, constraint) {
-                return Icon(Icons.adjust, size: constraint.biggest.height);
+                return Icon(Icons.crop_free, size: constraint.biggest.height);
               })
             ),
-            Container(
-              width: 100,
-              height: 100,
-              padding: const EdgeInsets.all(10),
-              color: Colors.blueGrey,
+            FloatingActionButton(
+              tooltip: "Timer",
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10),
+                )),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => TimerPage(),
+                ));
+              },
+              child: LayoutBuilder(builder: (context, constraint) {
+                return Icon(Icons.timer, size: constraint.biggest.height);
+              })
             ),
-            Container(
-              width: 100,
-              height: 100,
-              padding: const EdgeInsets.all(10),
-              color: Colors.blueGrey,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              padding: const EdgeInsets.all(10),
-              color: Colors.blueGrey,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              padding: const EdgeInsets.all(10),
-              color: Colors.blueGrey,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              padding: const EdgeInsets.all(10),
-              color: Colors.blueGrey,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              padding: const EdgeInsets.all(10),
-              color: Colors.blueGrey,
-            )
           ],
         ),
       ),

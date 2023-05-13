@@ -29,6 +29,13 @@
             {
               "client_id": "576897641702-p2r7j06813mg670diiicgqm3ais7cpqk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "576897641702-k88vbmpg9qvbm19uor9nisfmst8nt2i7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rangeofficer.rohelper"
+              }
             }
           ]
         }

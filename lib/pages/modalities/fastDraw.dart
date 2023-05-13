@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:rohelper/pages/numPad.dart';
 
@@ -108,6 +105,7 @@ class FastDraw extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: NumPad(
+                    maxHits: 30,
                     controller: _myController,
                     clearAll: () {
                       _myController.value.clear();

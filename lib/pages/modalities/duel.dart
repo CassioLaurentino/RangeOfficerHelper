@@ -4,11 +4,11 @@ import 'package:rohelper/pages/numPad.dart';
 class Duel extends StatelessWidget {
   Duel({super.key});
 
-  late int points = 0;
+  // late int points = 0;
 
   // text controller
   // final TextEditingController _myController = TextEditingController();
-  final ValueNotifier<List<String>> _myController = ValueNotifier([]);
+  ValueNotifier<List<String>> _myController = ValueNotifier<List<String>>([]);
 
   @override
   Widget build(BuildContext context) {
@@ -19,79 +19,119 @@ class Duel extends StatelessWidget {
           centerTitle: true,
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.width * 0.45,
                   child: Column(
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(top: 20),
-                        child: Text("Total"),
+                        child: Text(
+                          "Points",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Color.fromARGB(255, 182, 174, 174), fontSize: 20),),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Text(points.toString()),
+                        padding: const EdgeInsets.only(top: 10),
+                        child: ValueListenableBuilder(valueListenable: _myController, builder: (context, value, child) {
+                          return getTotalPoints(value);
+                        },)
                       )
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.width * 0.45,
                   child: Column(
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      const SizedBox(height: 20),
-                      const Text("Total 2 "),
-                      const SizedBox(height: 20),
-                      Text(points.toString())
+                      const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Text(
+                          "Hits",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Color.fromARGB(255, 182, 174, 174), fontSize: 20),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center, 
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ValueListenableBuilder(valueListenable: _myController, builder: (context, value, child) {
+                              return Text(
+                                value.length.toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold, color: Color.fromARGB(255, 182, 174, 174), fontSize: 20),
+                                );
+                            },),
+                          ],
+                        )
+                      )
                     ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Placeholder(
-                  color: Colors.red,
-                  fallbackHeight: MediaQuery.of(context).size.height * 0.2,
-                  fallbackWidth: MediaQuery.of(context).size.width * 0.95,
-                )
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: ValueListenableBuilder(valueListenable: _myController, builder: (context, value, child) {
+                        return getTextWidgets(value);
+                      },),
+                    )
+                  ),
+                ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                NumPad(
-                  controller: _myController,
-                  clearAll: () {
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: NumPad(
+                    maxHits: 20,
+                    controller: _myController,
+                    clearAll: () {
                       _myController.value.clear();
-                  },
-                  delete: () {
-                    _myController.value.removeLast();
-                  },
-                  // do something with the input numbers
-                  onSubmit: () {
-                    debugPrint('Your code: ${_myController.value}');
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              content: Text(
-                                "You code is ${_myController.value}",
-                                style: const TextStyle(fontSize: 30),
-                              ),
-                            ));
-                  },
+                      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                      _myController.notifyListeners();
+                    },
+                    delete: () {
+                      if (_myController.value.isNotEmpty) {
+                        _myController.value.removeLast();
+                        // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                        _myController.notifyListeners();
+                      }
+                    },
+                    // do something with the input numbers
+                    onSubmit: () {
+                      debugPrint('onSubmit - Your code: ${_myController.value}');
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (_) => AlertDialog(
+                      //           content: Text(
+                      //             "You code is ${_myController.text}",
+                      //             style: const TextStyle(fontSize: 30),
+                      //           ),
+                      //         ));
+                    },
+                  ),
                 ),
               ],
             ),
@@ -100,4 +140,47 @@ class Duel extends StatelessWidget {
       )
     );
   }
+}
+
+Widget getTotalPoints(List<String> strings) {
+  int points = 0;
+
+  strings.forEach((element) {
+    points += int.parse(element);
+  });
+
+  return Text(
+    points.toString(),
+    style: const TextStyle(
+      fontWeight: FontWeight.bold, color: Color.fromARGB(255, 182, 174, 174), fontSize: 20),);
+}
+
+Widget getTextWidgets(List<String> strings) {
+  return Wrap(
+    spacing: 5,
+    runSpacing: 5,
+    children: strings.map(
+      (item) => 
+        SizedBox(
+          width: 70,
+          height: 70,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor:  const Color.fromARGB(255, 236, 200, 200),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            onPressed: () {},
+            child: Center(
+              child: Text(
+                item.toString(),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Color.fromARGB(255, 82, 80, 80), fontSize: 30),
+              ),
+            ),
+          ),
+        )
+      ).toList()
+    );
 }
